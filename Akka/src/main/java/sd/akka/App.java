@@ -12,17 +12,19 @@ import sd.akka.actor.ArbitreActor;
 import sd.akka.actor.HelloWorldActor;
 import sd.akka.actor.JourNuitActor;
 import sd.akka.actor.NombrePremierActor;
+import sd.akka.actor.TelephoneActor;
 
 public class App {
 	public static void main(String[] args) {
+
 		ActorSystem actorSystem = ActorSystem.create();
-		ActorRef helloActor = actorSystem.actorOf(HelloWorldActor.props());
+	/* 	ActorRef helloActor = actorSystem.actorOf(HelloWorldActor.props());
 		// Envoi de messages simples
         helloActor.tell(new HelloWorldActor.SayHello("Akka"), ActorRef.noSender());
-        helloActor.tell(new HelloWorldActor.SayBye(), ActorRef.noSender());
+        helloActor.tell(new HelloWorldActor.SayBye(), ActorRef.noSender());*/
         
         // Jeu de ping pong (communication entre acteurs, et attente d'une réponse)
-        ActorRef arbitreActor = actorSystem.actorOf(ArbitreActor.props(), "arbitre");
+        /* ActorRef arbitreActor = actorSystem.actorOf(ArbitreActor.props(), "arbitre");
         arbitreActor.tell(new ArbitreActor.GetScore(), ActorRef.noSender());
         CompletionStage<Object> result = Patterns.ask(arbitreActor, new ArbitreActor.StartGame(), Duration.ofSeconds(10));
         try {
@@ -45,7 +47,21 @@ public class App {
         ActorRef router = actorSystem.actorOf(new RoundRobinPool(5).props(NombrePremierActor.props()));
         for (int i = 3; i < 10; i++) {
         	router.tell(new NombrePremierActor.Nombre(i), ActorRef.noSender());
-        }
+        } */ 
+        ActorRef telephone = actorSystem.actorOf(TelephoneActor.props(10));
+
+        CompletionStage<Object> result = Patterns.ask(telephone, new TelephoneActor.sendString("plop"), Duration.ofSeconds(10));
+        try {
+			String res = (String) result.toCompletableFuture().get();
+
+            System.out.println(res);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+        
+        //telephone.tell(new TelephoneActor.sendString("plop"), ActorRef.noSender());
         
         // Arrêt du système d'acteurs
         actorSystem.terminate();
