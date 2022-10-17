@@ -1,0 +1,4 @@
+sd/akka/message/HelloWorldMessage.class
+sd/akka/message/HelloWorldMessage$SayBye.class
+sd/akka/message/HelloWorldMessage$SayHello.class
+sd/akka/message/HelloWorldMessage$Message.class
