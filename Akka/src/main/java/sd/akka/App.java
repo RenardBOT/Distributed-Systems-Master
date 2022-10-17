@@ -8,11 +8,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.pattern.Patterns;
 import akka.routing.RoundRobinPool;
-import sd.akka.actor.ArbitreActor;
-import sd.akka.actor.HelloWorldActor;
-import sd.akka.actor.JourNuitActor;
-import sd.akka.actor.NombrePremierActor;
-import sd.akka.actor.TelephoneActor;
+import sd.akka.actor.*;
 
 public class App {
 	public static void main(String[] args) {
@@ -48,7 +44,12 @@ public class App {
         for (int i = 3; i < 10; i++) {
         	router.tell(new NombrePremierActor.Nombre(i), ActorRef.noSender());
         } */ 
-        ActorRef telephone = actorSystem.actorOf(TelephoneActor.props(10));
+
+
+        // ------------ EXERCICE 1
+
+        
+        /*ActorRef telephone = actorSystem.actorOf(TelephoneActor.props(10));
 
         CompletionStage<Object> result = Patterns.ask(telephone, new TelephoneActor.sendString("plop"), Duration.ofSeconds(10));
         try {
@@ -61,7 +62,30 @@ public class App {
 			e.printStackTrace();
 		}
         
-        //telephone.tell(new TelephoneActor.sendString("plop"), ActorRef.noSender());
+        telephone.tell(new TelephoneActor.sendString("plop"), ActorRef.noSender()); */
+
+        
+        // ------------ EXERCICE 2
+        /* ActorRef stockCrayon = actorSystem.actorOf(Stock.props("crayon"));
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Deliver(18500),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Acquire(15000),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Acquire(7000),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Acquire(10),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Deliver(5000),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Acquire(2000),ActorRef.noSender());
+        stockCrayon.tell(new Stock.Print(),ActorRef.noSender()); */
+
+        // ------------ EXERCICE 3
+        
+
+
+
         
         // Arrêt du système d'acteurs
         actorSystem.terminate();
